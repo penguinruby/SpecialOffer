@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+{% if user.is_authenticated %}
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% if records %}
+    {% for record in records %}
+      <div class="col mb-4">
+        <div class="card h-100">
+          <a href="{{ record.product_url }}" target="_blank">
+            <img src="{{ record.product_picture_url }}" class="card-img-top" alt="{{ record.product_name }}" style="height: 200px; object-fit: contain;margin-top: 10px;">
+          </a>          
+          <div class="card-body">
+            <h5 class="card-title">{{ record.product_name }}</h5>
+            <p class="card-text">Product Number: {{ record.product_number }}</p>
+            <p class="card-text">Price: {{ record.currency }} {{ record.price }}</p>
+            <p class="card-text">Brand: {{ record.brand_name }}</p>
+            <a href="{{ record.product_url }}" class="btn btn-primary btn-sm" target="_blank">View Product</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="col">
+      <p>No records found.</p>
+    </div>
+  {% endif %}
+</div>
+
+
+{% else %}
+
+<div class="col-md-6 offset-md-3">
+<h1>Login</h1>
+<br/>
+
+<form method="POST" action="{% url 'home' %}">
+	{% csrf_token %}
+
+  <div class="mb-3">
+    <input type="text" class="form-control" name="username", placeholder="Username" required>
+    
+  </div><br/>
+  <div class="mb-3">
+    <input type="password" class="form-control" name="password", placeholder="Password" required>
+  </div>
+  <br/>
+  <button type="submit" class="btn btn-secondary">Login</button>
+
+</form>
+
+
+
+{% endif %}
+
+{% endblock %}
