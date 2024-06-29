@@ -25,7 +25,7 @@
 {% if search_query %}
 <div class="row mb-3">
   <div class="col text-center">
-    <p>搜索结果: "{{ search_query }}" {% if records.paginator.count > 0 %}(共 {{ records.paginator.count }} 个结果){% endif %}</p>
+    <p>search results: "{{ search_query }}" {% if records.paginator.count > 0 %}(total {{ records.paginator.count }} results){% endif %}</p>
   </div>
 </div>
 {% endif %}
