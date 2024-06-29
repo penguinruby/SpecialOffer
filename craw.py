@@ -6,7 +6,7 @@ import os
 import django
 
 # Set up Django environment
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dcdc.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "specialoffer.settings")
 django.setup()
 
 from website.models import Product

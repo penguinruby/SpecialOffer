@@ -2,35 +2,110 @@
 
 {% block content %}
 
-
-
 {% if user.is_authenticated %}
+
+<div class="row mb-4">
+  <div class="col-md-6 offset-md-3">
+    <form method="GET" action="{% url 'home' %}">
+      <div class="input-group">
+        <input type="text" class="form-control" name="search" placeholder="search special offer..." value="{{ search_query }}">
+        <button class="btn btn-outline-secondary search-button" type="submit">Search</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col text-center">
+    <p>Total Product: {{ total_count }}</p>
+    <p>Search Product: {{ filtered_count }}</p>
+  </div>
+</div>
+
+{% if search_query %}
+<div class="row mb-3">
+  <div class="col text-center">
+    <p>搜索结果: "{{ search_query }}" {% if records.paginator.count > 0 %}(共 {{ records.paginator.count }} 个结果){% endif %}</p>
+  </div>
+</div>
+{% endif %}
+
+{% if records.has_other_pages %}
+  <nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+      {% if records.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ records.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Previous</a></li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Previous</span></li>
+      {% endif %}
+
+      {% for i in records.paginator.page_range %}
+        {% if records.number == i %}
+          <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+        {% else %}
+          <li class="page-item"><a class="page-link" href="?page={{ i }}{% if search_query %}&search={{ search_query }}{% endif %}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+
+      {% if records.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ records.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Next</a></li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Next</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
   {% if records %}
     {% for record in records %}
       <div class="col mb-4">
-        <div class="card h-100">
+        <div class="card h-100 shadow-sm">
           <a href="{{ record.product_url }}" target="_blank">
-            <img src="{{ record.product_picture_url }}" class="card-img-top" alt="{{ record.product_name }}" style="height: 200px; object-fit: contain;margin-top: 10px;">
+            <img src="{{ record.product_picture_url }}" class="card-img-top" alt="{{ record.name }}" style="height: 200px; object-fit: contain;margin-top: 10px;">
           </a>          
           <div class="card-body">
             <h5 class="card-title">{{ record.product_name }}</h5>
             <p class="card-text">Product Number: {{ record.product_number }}</p>
             <p class="card-text">Price: {{ record.currency }} {{ record.price }}</p>
             <p class="card-text">Brand: {{ record.brand_name }}</p>
-            <a href="{{ record.product_url }}" class="btn btn-primary btn-sm" target="_blank">View Product</a>
+            <a href="{{ record.product_url }}" class="btn btn-secondary" target="_blank">View Product</a>
           </div>
         </div>
       </div>
     {% endfor %}
   {% else %}
     <div class="col">
-      <p>No records found.</p>
+      <p>No products found. {% if search_query %}Please try a different search term.{% endif %}</p>
     </div>
   {% endif %}
 </div>
 
+{% if records.has_other_pages %}
+  <nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+      {% if records.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ records.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Previous</a></li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Previous</span></li>
+      {% endif %}
+
+      {% for i in records.paginator.page_range %}
+        {% if records.number == i %}
+          <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+        {% else %}
+          <li class="page-item"><a class="page-link" href="?page={{ i }}{% if search_query %}&search={{ search_query }}{% endif %}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+
+      {% if records.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ records.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Next</a></li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Next</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
 
 {% else %}
 
@@ -52,8 +127,6 @@
   <button type="submit" class="btn btn-secondary">Login</button>
 
 </form>
-
-
 
 {% endif %}
 

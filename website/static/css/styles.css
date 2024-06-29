@@ -1,0 +1,29 @@
+/* static/css/styles.css */
+
+/* Pagination links */
+.pagination .page-link {
+    color: black; /* Text color */
+    background-color: white; /* Background color */
+    border: 1px solid #bfc2cb; /* Border color */
+  }
+  
+  .pagination .page-link:hover {
+    color: white; /* Text color on hover */
+    background-color: #bfc2cb; /* Background color on hover */
+  }
+  
+  .pagination .page-item.active .page-link {
+    color: white; /* Active page text color */
+    background-color: #bfc2cb; /* Active page background color */
+    border-color: #bfc2cb; /* Active page border color */
+  }
+  
+  .pagination .page-item.disabled .page-link {
+    color: #6c757d; /* Disabled page text color */
+    background-color: white; /* Disabled page background color */
+    border-color: #bfc2cb; /* Disabled page border color */
+  }
+  
+  .btn-outline-secondary.search-button {
+    border-color: #dee2e6;
+}
