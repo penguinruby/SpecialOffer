@@ -5,7 +5,7 @@
 3. use vscode open this project
 4. open vscode terminal
    1. `python3 -m venv virtual`
-   2. `source virtual/bin/activate`
+   2. `source virtual/bin/activate` (virtual/Scripts/activate -Win)
    3. `pip install django`
    4. `python manage.py makemigrations`
    5. `python manage.py migrate`
